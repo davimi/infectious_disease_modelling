@@ -5,11 +5,15 @@ import org.knowm.xchart.XYChart
 import org.knowm.xchart.XYChartBuilder
 import org.knowm.xchart.XYSeries
 
+import com.github.davimi.Utils.renderWithPrefix
+
 
 object Visualization {
 
-    fun plotSimulationResult(simulationResults: Collection<State>) {
-        val chart: XYChart = XYChartBuilder().width(900).height(600).title("Simulation").xAxisTitle("time").yAxisTitle("amount of individuals").build()
+    fun plotModelResult(simulationResults: Collection<State>, beta: Double? = null, gamma: Double? = null) {
+
+        val title = "SRIModel" + beta.renderWithPrefix(" - beta: ") + gamma.renderWithPrefix(" - gamma: ")
+        val chart: XYChart = XYChartBuilder().width(900).height(600).title(title).xAxisTitle("time").yAxisTitle("amount of individuals").build()
 
         chart.styler.defaultSeriesRenderStyle = XYSeries.XYSeriesRenderStyle.Line
 

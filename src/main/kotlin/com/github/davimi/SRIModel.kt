@@ -8,7 +8,7 @@ import kotlin.math.roundToLong
  * Individuals go from an susceptible to an infected to an removed state: S -> I -> R.
  * N = S + I + R. N is fixed throughout the simulation.
  */
-class Simulation(val N: Population, val beta: Double, val gamma: Double, val initiallyInfected: Int, val maxTimeSteps: Int) {
+class SRIModel(val N: Population, private val beta: Double, private val gamma: Double, private val initiallyInfected: Int, private val maxTimeSteps: Int) : Model {
 
     private val t0 = 0
     var simulationResults: List<State>? = null
@@ -41,7 +41,7 @@ class Simulation(val N: Population, val beta: Double, val gamma: Double, val ini
         return State(newT, newSusceptible, newInfected, newRemoved, state.b)
     }
 
-    fun run() {
+    override fun run() {
         val initialState = State(
             t0,
             Susceptible(t0, N.amount),
