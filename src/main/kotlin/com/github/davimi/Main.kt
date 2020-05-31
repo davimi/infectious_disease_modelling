@@ -2,14 +2,15 @@ package com.github.davimi
 
 fun main(args: Array<String>) {
 
-    val beta = 0.4
-    val gamma = 0.1
-    val delta = 0.03
-    val simulation = SRIModel(Population(10000), beta, gamma, delta, 3, 150)
+    val infectionRate = 0.4
+    val recoveryRate = 0.04
+    val mortalityRate = 0.005
+    val initiallyInfected = 3
+    val simulation = SRIModel(Population(10000), infectionRate, recoveryRate, mortalityRate, initiallyInfected, 150)
     simulation.run()
 
     val results: List<State> = simulation.simulationResults.orEmpty()
 
-    Visualization.plotModelResult(results, beta, gamma)
+    Visualization.plotModelResult(results, infectionRate, recoveryRate)
 
 }
