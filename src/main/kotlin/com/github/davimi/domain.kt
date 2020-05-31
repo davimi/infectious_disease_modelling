@@ -15,6 +15,9 @@ data class Infected(val t: Int, val amount: Long)
  */
 data class Removed(val t: Int, val amount: Long)
 
+
+data class Deceased(val t: Int, val amount: Long)
+
 /**
  * The total amount of the population
  */
@@ -25,4 +28,12 @@ data class Population(val amount: Long)
  */
 data class Beta(val value: Double)
 
-data class State(val t: Int, val s: Susceptible, val i: Infected, val r: Removed, val b: Beta)
+data class State(
+    val t: Int,
+    val s: Susceptible,
+    val i: Infected,
+    val r: Removed,
+    val b: Double,
+    val delta: Double,
+    val d: Deceased
+)

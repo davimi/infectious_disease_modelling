@@ -8,7 +8,7 @@ import kotlin.math.roundToLong
  * Individuals go from an susceptible to an infected to an removed state: S -> I -> R.
  * N = S + I + R. N is fixed throughout the simulation.
  */
-class SRIModel(val N: Population, private val beta: Double, private val gamma: Double, private val initiallyInfected: Int, private val maxTimeSteps: Int) : Model {
+class SRIModel(val N: Population, private val beta: Double, private val gamma: Double, val delta: Double, private val initiallyInfected: Int, private val maxTimeSteps: Int) : Model {
 
     private val t0 = 0
     var simulationResults: List<State>? = null
@@ -20,7 +20,7 @@ class SRIModel(val N: Population, private val beta: Double, private val gamma: D
     }
 
     fun calcNewInfected(s: Susceptible, i: Infected): Infected {
-        val change: Long = (((beta * s.amount * i.amount) / N.amount) - (gamma * i.amount)).roundToLong()
+        val change: Long = (((beta * s.amount * i.amount) / N.amount) - (gamma * i.amount)).roundToLong() - (delta * i.amount).roundToLong()
         val newInfected = Infected(i.t + 1, i.amount + change)
         return newInfected
     }
@@ -31,14 +31,21 @@ class SRIModel(val N: Population, private val beta: Double, private val gamma: D
         return newRemoved
     }
 
+    fun calcNewDeseased(d: Deceased, i: Infected): Deceased {
+        val change = (delta * i.amount).roundToLong()
+        val newDeceased = Deceased(d.t + 1, d.amount + change)
+        return newDeceased
+    }
+
     fun step(state: State): State {
 
         val newT = state.t + 1
         val newInfected = calcNewInfected(state.s, state.i)
         val newRemoved = calcNewRemoved(state.r, state.i)
         val newSusceptible = calcNewSusceptible(state.s, state.i)
+        val newDeceased = calcNewDeseased(state.d, state.i)
 
-        return State(newT, newSusceptible, newInfected, newRemoved, state.b)
+        return State(newT, newSusceptible, newInfected, newRemoved, state.b, state.delta, newDeceased)
     }
 
     override fun run() {
@@ -47,7 +54,9 @@ class SRIModel(val N: Population, private val beta: Double, private val gamma: D
             Susceptible(t0, N.amount),
             Infected(t0, initiallyInfected.toLong()),
             Removed(t0, 0),
-            Beta(beta)
+            beta,
+            delta,
+            Deceased(t0, 0)
         )
 
         val states: MutableList<State> = mutableListOf()

@@ -20,6 +20,7 @@ object Visualization {
         chart.addSeries("Removed", simulationResults.map { it.r.amount })
         chart.addSeries("Susceptible", simulationResults.map { it.s.amount })
         chart.addSeries("Infected", simulationResults.map { it.i.amount })
+        chart.addSeries("Deceased", simulationResults.map { it.d.amount })
 
         SwingWrapper(chart).displayChart();
 
