@@ -1,6 +1,6 @@
 # Infectious disease simulation
 
-An infectious disease simulation written in Kotlin.
+An infectious disease model written in Kotlin.
 
 ##
 

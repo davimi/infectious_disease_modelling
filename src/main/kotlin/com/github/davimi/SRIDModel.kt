@@ -25,9 +25,9 @@ class SRIDModel(val N: Population, private val infectionRate: Double, private va
         return newInfected
     }
 
-    fun calcNewRemoved(r: Removed, i: Infected): Removed {
+    fun calcNewRemoved(r: Recovered, i: Infected): Recovered {
         val change = (recoveryRate * i.amount).roundToLong()
-        val newRemoved = Removed(r.t + 1, r.amount + change)
+        val newRemoved = Recovered(r.t + 1, r.amount + change)
         return newRemoved
     }
 
@@ -45,15 +45,15 @@ class SRIDModel(val N: Population, private val infectionRate: Double, private va
         val newSusceptible = calcNewSusceptible(state.s, state.i)
         val newDeceased = calcNewDeseased(state.d, state.i)
 
-        return State(newT, newSusceptible, newInfected, newRemoved, state.b, state.delta, newDeceased)
+        return State(newT, newSusceptible, newInfected, newRemoved, state.infectionRate, state.mortalityRate, newDeceased)
     }
 
-    override fun run() {
+    override fun run(): Collection<State> {
         val initialState = State(
             t0,
             Susceptible(t0, N.amount),
             Infected(t0, initiallyInfected.toLong()),
-            Removed(t0, 0),
+            Recovered(t0, 0),
             infectionRate,
             mortalityRate,
             Deceased(t0, 0)
@@ -70,5 +70,7 @@ class SRIDModel(val N: Population, private val infectionRate: Double, private va
         }
 
         this.simulationResults = states.toList()
+
+        return this.simulationResults.orEmpty()
     }
 }
