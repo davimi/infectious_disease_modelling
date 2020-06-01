@@ -8,7 +8,7 @@ import kotlin.math.roundToLong
  * Individuals go from an susceptible to an infected to an recovered or deceased state: S -> I -> (R or D).
  * N = S + I + R + D. N is fixed throughout the simulation. Once recovered or deceased, the individual cannot be susceptible again.
  */
-class SRIModel(val N: Population, private val infectionRate: Double, private val recoveryRate: Double, private val mortalityRate: Double, private val initiallyInfected: Int, private val maxTimeSteps: Int) : Model {
+class SRIDModel(val N: Population, private val infectionRate: Double, private val recoveryRate: Double, private val mortalityRate: Double, private val initiallyInfected: Int, private val maxTimeSteps: Int) : Model {
 
     private val t0 = 0
     var simulationResults: List<State>? = null

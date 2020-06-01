@@ -1,18 +1,14 @@
 package com.github.davimi
 
-import org.knowm.xchart.SwingWrapper
-import org.knowm.xchart.XYChart
-import org.knowm.xchart.XYChartBuilder
-import org.knowm.xchart.XYSeries
-
 import com.github.davimi.Utils.renderWithPrefix
+import org.knowm.xchart.*
 
 
 object Visualization {
 
-    fun plotModelResult(simulationResults: Collection<State>, infectionRate: Double? = null, recoveryRate: Double? = null, mortalityRate: Double? = null) {
+    fun plotModelResult(simulationResults: Collection<State>, saveImage: Boolean = false, infectionRate: Double? = null, recoveryRate: Double? = null, mortalityRate: Double? = null) {
 
-        val title = "SRIModel" +
+        val title = "SRIDModel" +
                 infectionRate.renderWithPrefix(" - infection rate: ") +
                 recoveryRate.renderWithPrefix(" - recovery rate: ") +
                 mortalityRate.renderWithPrefix(" - mortality rate: ")
@@ -27,8 +23,15 @@ object Visualization {
 
         SwingWrapper(chart).displayChart();
 
+        if (saveImage) {
+            saveChart(chart, title)
+        }
+
     }
 
+    private fun saveChart(chart: XYChart, name: String) {
+        BitmapEncoder.saveBitmap(chart, "./$name.jpg", BitmapEncoder.BitmapFormat.JPG);
+    }
 
 
 }
