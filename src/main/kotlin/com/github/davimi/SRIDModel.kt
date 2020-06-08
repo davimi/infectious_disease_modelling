@@ -39,11 +39,11 @@ class SRIDModel(val N: Population, private val infectionRate: Double, private va
 
     fun step(state: State): State {
 
-        val newT = state.t + 1
         val newInfected = calcNewInfected(state.s, state.i)
         val newRemoved = calcNewRemoved(state.r, state.i)
         val newSusceptible = calcNewSusceptible(state.s, state.i)
         val newDeceased = calcNewDeseased(state.d, state.i)
+        val newT = state.t + 1
 
         return State(newT, newSusceptible, newInfected, newRemoved, state.infectionRate, state.mortalityRate, newDeceased)
     }
