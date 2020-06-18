@@ -1,8 +1,10 @@
-# Infectious disease simulation
+# Infectious disease Model
 
 An infectious disease model written in Kotlin.
 
 Run at Main.kt.
+
+### Model results
 
 ![Results](https://github.com/davimi/infectious_disease_modelling/blob/master/SRIDModel.jpg "Results")
 
