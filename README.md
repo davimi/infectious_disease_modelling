@@ -1,4 +1,4 @@
-# Infectious disease Model
+# Infectious Disease Model
 
 An infectious disease model written in Kotlin.
 
